@@ -1,6 +1,14 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # Changelog
 
+## 0.3.3
+
+- Use the effective rendering mode for map footer labels.
+- Label geographic output `Geographic map` in English and `Mapa geográfico` in Spanish.
+- Use singular and plural forms for search results, map descriptions and stop counts in English and Spanish.
+- Include the existing `--width`, `--height` and `--colors` CLI options in `--help`.
+- Describe keyboard controls and textual route alternatives in package documentation and metadata.
+
 ## 0.3.2
 
 - Use the canonical repository and software name `opentransitinformation`.

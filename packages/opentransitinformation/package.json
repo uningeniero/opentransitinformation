@@ -1,6 +1,6 @@
 {
   "name": "opentransitinformation",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Transit diagrams, OpenStreetMap geographic context and interactive HTML maps with keyboard controls and textual route alternatives, using Rust and WebAssembly.",
   "type": "module",
   "license": "Apache-2.0",
