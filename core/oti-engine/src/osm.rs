@@ -852,7 +852,7 @@ pub fn import(input: &Value) -> Result<Value, String> {
             format!("osm-{}-{}", key.0, key.1),
             Failure::new(
                 "OSM_DUPLICATE_OBJECT",
-                "Duplicate OSM objects were omitted rather than choosing an arbitrary revision",
+                "Duplicate OSM objects were omitted; no revision was selected",
             ),
         ));
     }

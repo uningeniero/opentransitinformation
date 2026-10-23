@@ -7,7 +7,7 @@ const fail = (c, m) => {
 };
 export function parseCsv(text, { delimiter = ',' } = {}) {
   if (typeof text !== 'string' || text.length > 128 * 1024 * 1024)
-    fail('INVALID_CSV', 'Expected CSV text up to 128 MiB');
+    fail('INVALID_CSV', 'Expected CSV text of at most 134217728 UTF-16 code units');
   if (![',', ';', '\t'].includes(delimiter))
     fail('INVALID_CSV', 'Unsupported delimiter');
   text = text.replace(/^\uFEFF/, '');
@@ -276,7 +276,7 @@ export function fromGtfs(
   const t = gtfsTables(input);
   for (const k of ['stops', 'routes', 'trips', 'stop_times'])
     if (!Array.isArray(t[k]) || !t[k].length)
-      fail('INVALID_GTFS', `Missing ${k}.txt`);
+      fail('INVALID_GTFS', `Expected a non-empty ${k}.txt table`);
   let active = serviceIds ? new Set(serviceIds.map(String)) : null;
   if (date) {
     if (!/^\d{8}$/.test(date)) fail('INVALID_GTFS', 'date must be YYYYMMDD');
@@ -460,7 +460,7 @@ export async function fromText(
   { id = 'text', name = 'Transit network', metadata = {} } = {}
 ) {
   if (typeof text !== 'string' || text.length > 1e6)
-    fail('INVALID_TEXT_INPUT', 'Expected route text under 1 MiB');
+    fail('INVALID_TEXT_INPUT', 'Expected route text of at most 1000000 UTF-16 code units');
   const stops = new Map(),
     routes = [];
   for (const line of text

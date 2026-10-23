@@ -211,7 +211,7 @@ pub fn build(input: &Value) -> Result<Value, String> {
     let ascending = indices.windows(2).all(|p| p[0] < p[1]);
     let descending = indices.windows(2).all(|p| p[0] > p[1]);
     if !ascending && !descending {
-        return Err("Selected stops contradict the authoritative OSM route order".into());
+        return Err("Selected stops are not ordered along the OSM route chain".into());
     }
     let start = indices[0].min(*indices.last().unwrap());
     let end = indices[0].max(*indices.last().unwrap());

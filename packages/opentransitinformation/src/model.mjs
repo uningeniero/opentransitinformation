@@ -163,7 +163,7 @@ export function normalizeNetwork(input) {
     if (c.kind !== 'label-side')
       fail(
         'UNSUPPORTED_CONSTRAINT',
-        `${c.kind} is not supported in version 0.1`
+        `${c.kind} constraints are not supported`
       );
     if (
       ![
@@ -289,7 +289,7 @@ export async function extractDocument(
   if (!result || !result.network)
     fail(
       'INVALID_EXTRACTION',
-      'Extractor must return network, confidence and issues'
+      'Extractor must return a network'
     );
   if (
     !Number.isFinite(result.confidence) ||
