@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: Apache-2.0
+name: Validate package
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      OTI_BROWSER_CHANNEL: chromium
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: packages/opentransitinformation/package-lock.json
+      - run: rustup show
+      - run: npm ci
+        working-directory: packages/opentransitinformation
+      - run: npm run build && npm test && npm run check:types && npm run check:package && npm run check:release
+        working-directory: packages/opentransitinformation
+      - run: cargo test --manifest-path core/oti-engine/Cargo.toml
+      - run: npx playwright install --with-deps chromium
+        working-directory: packages/opentransitinformation
+      - run: npm run test:browser && npm run test:design && npm run test:osm-browser
+        working-directory: packages/opentransitinformation

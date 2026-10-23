@@ -1,0 +1,87 @@
+{
+  "name": "opentransitinformation",
+  "version": "0.3.1",
+  "description": "Deterministic transit diagrams, OpenStreetMap geographic context and accessible offline interactive maps powered by Rust and WebAssembly.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "author": "Open Transit Information contributors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uningeniero/opentransitinformation-engine.git",
+    "directory": "packages/opentransitinformation"
+  },
+  "bugs": {
+    "url": "https://github.com/uningeniero/opentransitinformation-engine/issues"
+  },
+  "homepage": "https://opentransitinformation.org",
+  "keywords": [
+    "transit",
+    "maps",
+    "diagram",
+    "gtfs",
+    "geojson",
+    "svg",
+    "accessibility",
+    "wasm",
+    "transport"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    },
+    "./browser": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/browser.mjs",
+      "default": "./dist/browser.mjs"
+    },
+    "./node": {
+      "types": "./dist/node.d.mts",
+      "import": "./dist/node.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.mts",
+  "main": "./dist/index.mjs",
+  "bin": {
+    "oti": "dist/cli.mjs"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "NOTICE"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test test/*.test.mjs",
+    "check:types": "tsc --noEmit --strict --module nodenext --moduleResolution nodenext --target es2022 test/types.mts",
+    "check:package": "node scripts/check-package.mjs",
+    "test:browser": "node test/browser.mjs",
+    "prepublishOnly": "npm run build && npm test && npm run check:types && npm run check:package && npm run check:release",
+    "test:design": "node test/design-browser.mjs",
+    "check:release": "node scripts/check-release.mjs",
+    "test:osm-browser": "node test/osm-browser.mjs"
+  },
+  "dependencies": {
+    "fflate": "^0.8.2",
+    "fontkit": "^2.0.4"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@resvg/resvg-js": "^2.6.2",
+    "esbuild": "^0.25.0",
+    "playwright": "^1.56.0",
+    "prettier": "^3.9.10",
+    "typescript": "^5.9.3"
+  }
+}
