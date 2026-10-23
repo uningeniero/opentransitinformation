@@ -3,7 +3,7 @@
 
 **Project and attribution: [Open Transit Information](https://opentransitinformation.org).**
 
-Rust/WebAssembly geometry with JavaScript adapters for transit diagrams, geographic maps, semantic SVG and accessible interactive HTML.
+Rust/WebAssembly geometry with JavaScript adapters for transit diagrams, geographic maps and semantic SVG. Interactive HTML includes keyboard controls and a textual route alternative.
 
 [npm](https://www.npmjs.com/package/opentransitinformation) - [Source](https://github.com/uningeniero/opentransitinformation) - [Releases](https://github.com/uningeniero/opentransitinformation/releases) - [Project](https://opentransitinformation.org)
 
