@@ -1,6 +1,13 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # Changelog
 
+## 0.3.4
+
+- Clarify diagnostics for unsupported pin constraints, extracted networks and empty GTFS stops tables.
+- State CSV and route-text size limits in UTF-16 code units.
+- Describe duplicate OSM object handling and the stop-order requirement for OSM route chains.
+- Include the rendering-label, count-grammar, CLI-help and documentation changes recorded under 0.3.3.
+
 ## 0.3.3
 
 - Use the effective rendering mode for map footer labels.
