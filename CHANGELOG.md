@@ -6,9 +6,9 @@
 - Clarify diagnostics for unsupported pin constraints, extracted networks and empty GTFS stops tables.
 - State CSV and route-text size limits in UTF-16 code units.
 - Describe duplicate OSM object handling and the stop-order requirement for OSM route chains.
-- Include the rendering-label, count-grammar, CLI-help and documentation changes recorded under 0.3.3.
+- Include the rendering labels, count grammar, CLI help and documentation changes prepared for the unpublished 0.3.3 release.
 
-## 0.3.3
+## 0.3.3 (unreleased)
 
 - Use the effective rendering mode for map footer labels.
 - Label geographic output `Geographic map` in English and `Mapa geográfico` in Spanish.
