@@ -1,17 +1,17 @@
 {
   "name": "opentransitinformation",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Deterministic transit diagrams, OpenStreetMap geographic context and accessible offline interactive maps powered by Rust and WebAssembly.",
   "type": "module",
   "license": "Apache-2.0",
   "author": "Open Transit Information contributors",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/uningeniero/opentransitinformation-engine.git",
+    "url": "git+https://github.com/uningeniero/opentransitinformation.git",
     "directory": "packages/opentransitinformation"
   },
   "bugs": {
-    "url": "https://github.com/uningeniero/opentransitinformation-engine/issues"
+    "url": "https://github.com/uningeniero/opentransitinformation/issues"
   },
   "homepage": "https://opentransitinformation.org",
   "keywords": [

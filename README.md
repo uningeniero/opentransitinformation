@@ -1,11 +1,11 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
-# Open Transit Information Engine
+# opentransitinformation
 
 **Project and attribution: [Open Transit Information](https://opentransitinformation.org).**
 
 Rust/WebAssembly geometry with JavaScript adapters for transit diagrams, geographic maps, semantic SVG and accessible interactive HTML.
 
-[npm](https://www.npmjs.com/package/opentransitinformation) - [Source](https://github.com/uningeniero/opentransitinformation-engine) - [Releases](https://github.com/uningeniero/opentransitinformation-engine/releases) - [Project](https://opentransitinformation.org)
+[npm](https://www.npmjs.com/package/opentransitinformation) - [Source](https://github.com/uningeniero/opentransitinformation) - [Releases](https://github.com/uningeniero/opentransitinformation/releases) - [Project](https://opentransitinformation.org)
 
 ```sh
 npm install opentransitinformation

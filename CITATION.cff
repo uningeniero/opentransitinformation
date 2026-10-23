@@ -2,11 +2,11 @@
 cff-version: 1.2.0
 message: "Credit Open Transit Information and https://opentransitinformation.org when citing this software."
 type: software
-title: Open Transit Information Engine
+title: opentransitinformation
 authors:
   - name: Open Transit Information contributors
-version: 0.3.1
+version: 0.3.2
 date-released: 2026-10-23
 license: Apache-2.0
 url: https://opentransitinformation.org
-repository-code: https://github.com/uningeniero/opentransitinformation-engine
+repository-code: https://github.com/uningeniero/opentransitinformation
