@@ -3,7 +3,7 @@
 
 ## 0.3.4
 
-- Clarify diagnostics for unsupported pin constraints, extracted networks and empty GTFS stops tables.
+- Clarify diagnostics for unsupported constraints, extracted networks and required GTFS tables.
 - State CSV and route-text size limits in UTF-16 code units.
 - Describe duplicate OSM object handling and the stop-order requirement for OSM route chains.
 - Include the rendering labels, count grammar, CLI help and documentation changes prepared for the unpublished 0.3.3 release.
