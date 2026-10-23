@@ -25,6 +25,7 @@ const pathData = (coords) =>
   coords.map((p, i) => `${i ? 'L' : 'M'}${n(p[0])} ${n(p[1])}`).join(' ');
 export function serializeSvg(network, layout, style, measured, options = {}) {
   const copy = localeCopy(options.locale);
+  const mode = options.mode || style.mode;
   const active = options.activeRoutes ? new Set(options.activeRoutes) : null;
   const routes = network.routes.filter((r) => !active || active.has(r.id));
   const routeMap = new Map(routes.map((r) => [r.id, r]));
@@ -83,7 +84,7 @@ export function serializeSvg(network, layout, style, measured, options = {}) {
   const footerLines = [
     ...measured.wrap(caption, layout.width - 60, 14),
     ...measured.wrap(
-      `${network.coordinateSystem === 'planar' || style.mode === 'schematic' ? copy.schematic : copy.geographic}${network.stops.some((s) => s.accessible === true) ? ' - ' + copy.accessKey : ''}`,
+      `${network.coordinateSystem === 'planar' || mode === 'schematic' ? copy.schematic : copy.geographic}${network.stops.some((s) => s.accessible === true) ? ' - ' + copy.accessKey : ''}`,
       layout.width - 60,
       14
     )

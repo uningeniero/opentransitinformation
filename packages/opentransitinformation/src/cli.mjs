@@ -14,7 +14,7 @@ import { toHtml } from './node.mjs';
 const args = process.argv.slice(2);
 if (!args.length || args.includes('--help')) {
   console.log(
-    'oti <input> --out <map.svg|map.html> [--format json|geojson|gtfs|text] [--profile schematic|geographic|print|highContrast] [--background none|subtle|atlas|mono] [--osm west,south,east,north] [--osm-endpoint URL] [--locale en|es] [--qa report.json]'
+    'oti <input> --out <map.svg|map.html> [--format json|geojson|gtfs|text] [--profile schematic|geographic|print|highContrast] [--width number] [--height number] [--colors source|adaptive] [--background none|subtle|atlas|mono] [--osm west,south,east,north] [--osm-endpoint URL] [--locale en|es] [--qa report.json]'
   );
   process.exit(0);
 }

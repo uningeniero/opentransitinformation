@@ -21,6 +21,8 @@ High-contrast route badges retain route colour in the border when the coloured f
 
 Profiles are `schematic`, `geographic`, `print` and `highContrast`. Titles, legends and validity panels wrap with final font metrics. SVG IDs and CSS are scoped per instance; consumers embedding repeated standalone diagrams supply distinct `idPrefix` values. The viewer assigns its own instance prefix, supports search, selection, keyboard, pan, pinch and a textual route alternative. A mobile overview is not a claim that every label is readable without zoom. Product copy defaults to English; explicit `locale: 'es'` provides a secondary Spanish interface without changing network names or geometry.
 
+Footer labels follow the coordinate system and effective rendering mode. Planar or schematic output uses `Diagram not to scale`; WGS84 geographic output uses `Geographic map`. Both source-aligned and generalised geographic output use that label; it does not certify positional accuracy.
+
 ## Vector context
 
 `backgroundStyle` accepts `none`, `subtle`, `atlas` and `mono`. Land, water, parks, urban areas, buildings, boundaries, streets and railways use distinct subordinate treatments. Every context layer is clipped to the map area with a local instance ID. Large or remote context never changes the network frame or covers the title, legend or footer. Polygon holes stay holes; rivers may be open lines. Polygon rings remain exact, while `backgroundSimplification` bounds line simplification to 0..3 output pixels (default 0.6).

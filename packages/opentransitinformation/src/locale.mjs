@@ -18,7 +18,7 @@ const en = {
   inaccessible: 'Not wheelchair accessible',
   unknown: 'Wheelchair access unconfirmed',
   schematic: 'Diagram not to scale',
-  geographic: 'Simplified geographic geometry',
+  geographic: 'Geographic map',
   accessKey: 'Wheelchair symbol: confirmed wheelchair access',
   from: 'From',
   until: 'Until',
@@ -26,18 +26,18 @@ const en = {
   unknownDate: 'date unconfirmed',
   platformLinks: 'Dashed station links are schematic, not walking directions',
   noResults: 'No results found.',
-  resultCount: (count) => `${count} results.`,
+  resultCount: (count) => `${count} ${count === 1 ? 'result' : 'results'}.`,
   updateBase: 'Update OpenStreetMap',
   updatingBase: 'Updating the base map...',
   baseSnapshot: (date) => `OSM data: ${date}`,
   baseUpdateFailed: (date) => `Update unavailable. Showing OSM data: ${date}`,
   route: (code, name) => `Route ${code}: ${name}`,
   selectRoute: (code, name) => `Select route ${code}: ${name}`,
-  routeInfo: (code, name, count) => `Route ${code} - ${name}. ${count} stops.`,
+  routeInfo: (code, name, count) => `Route ${code} - ${name}. ${count} ${count === 1 ? 'stop' : 'stops'}.`,
   routeResult: (code, name) => `Route ${code} - ${name}`,
   stopInfo: (name, codes, access) => `${name}. Routes ${codes}. ${access}.`,
   description: (routes, stops) =>
-    `${routes} routes and ${stops} stops. Each route is identified by code and colour. Crossings without a station symbol do not indicate an interchange.`
+    `${routes} ${routes === 1 ? 'route' : 'routes'} and ${stops} ${stops === 1 ? 'stop' : 'stops'}. Each route is identified by code and colour. Crossings without a station symbol do not indicate an interchange.`
 };
 const es = {
   routes: 'Líneas',
@@ -58,7 +58,7 @@ const es = {
   inaccessible: 'No accesible en silla de ruedas',
   unknown: 'Accesibilidad en silla de ruedas sin confirmar',
   schematic: 'Esquema sin escala',
-  geographic: 'Geometría geográfica simplificada',
+  geographic: 'Mapa geográfico',
   accessKey: 'Símbolo de silla de ruedas: acceso en silla de ruedas confirmado',
   from: 'Desde',
   until: 'Hasta',
@@ -67,7 +67,7 @@ const es = {
   platformLinks:
     'Los enlaces discontinuos de estación son esquemáticos, no indicaciones peatonales',
   noResults: 'No se han encontrado resultados.',
-  resultCount: (count) => `${count} resultados.`,
+  resultCount: (count) => `${count} ${count === 1 ? 'resultado' : 'resultados'}.`,
   updateBase: 'Actualizar OpenStreetMap',
   updatingBase: 'Actualizando el mapa base...',
   baseSnapshot: (date) => `Datos OSM: ${date}`,
@@ -76,11 +76,11 @@ const es = {
   route: (code, name) => `Línea ${code}: ${name}`,
   selectRoute: (code, name) => `Seleccionar línea ${code}: ${name}`,
   routeInfo: (code, name, count) =>
-    `Línea ${code} - ${name}. ${count} paradas.`,
+    `Línea ${code} - ${name}. ${count} ${count === 1 ? 'parada' : 'paradas'}.`,
   routeResult: (code, name) => `Línea ${code} - ${name}`,
   stopInfo: (name, codes, access) => `${name}. Líneas ${codes}. ${access}.`,
   description: (routes, stops) =>
-    `${routes} líneas y ${stops} paradas. Cada línea se identifica por código y color. Los cruces sin símbolo no indican transbordo.`
+    `${routes} ${routes === 1 ? 'línea' : 'líneas'} y ${stops} ${stops === 1 ? 'parada' : 'paradas'}. Cada línea se identifica por código y color. Los cruces sin símbolo no indican transbordo.`
 };
 export function localeCopy(locale = 'en') {
   if (!['en', 'es'].includes(locale)) throw new TypeError('Unsupported locale');
