@@ -1,8 +1,6 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # TNM 0.3 - Transit network model
 
-Publication edition: v1
-
 The network declares `id`, `name`, `coordinateSystem` (`planar` or `wgs84`), `stops` and `routes`. Stops have unique IDs, names and positions. Routes have stable IDs, legible codes and one or more ordered stop sequences. Optional geometry preserves the complete route, loops and distinct directions. A shared location never creates a transfer: only explicit shared stop IDs define it.
 
 Importers do not invent schedules, accessibility, services or geographic coordinates. Unknown accessibility remains unknown. Planar data is valid without pretending to be georeferenced. Store sources, licences, versions and validity in `metadata`; consumers supply rights and validity for their data.

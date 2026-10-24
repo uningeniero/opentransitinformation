@@ -1,8 +1,6 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # OpenStreetMap context snapshots
 
-Publication edition: v1
-
 The library's OSM adapter uses read-only Overpass JSON (`out meta geom`). Polygon assembly, ring validation, hole association and route clipping belong in Rust/WASM. Browser/Node adapters handle transport, bounds validation and provenance, rather than duplicating geometry algorithms.
 
 `fromOpenStreetMap(data, options)` returns an asynchronous snapshot containing `features`, `issues`, `statistics` and `provenance`. Ways and multipolygon relations retain original geographic coordinates. Invalid/incomplete source geometries are diagnosed; no artificial closure or replacement geography is permitted. Supported background classifications distinguish street hierarchy without changing transport geometry.

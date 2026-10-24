@@ -1,8 +1,6 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # opentransitinformation
 
-Publication edition: v1
-
 **Project and attribution: [Open Transit Information](https://opentransitinformation.org).**
 
 Rust/WebAssembly geometry with JavaScript adapters for transit diagrams, geographic maps and semantic SVG. Interactive HTML includes keyboard controls and a textual route alternative.

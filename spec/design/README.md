@@ -1,8 +1,6 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # TSS 0.3 - Executable design profiles
 
-Publication edition: v1
-
 OTI derives line width, lane spacing, corner radius, station symbols, label gaps and margins as a proportional system. Text is measured with the embedded font and rendered with the same quoted CSS family and weight. Preserve official names and their original characters. Route codes and colours provide redundant identification; colour alone never identifies a service. Transfers come from explicit shared stop IDs, never from a geometric crossing.
 
 ## Corridors and junctions
