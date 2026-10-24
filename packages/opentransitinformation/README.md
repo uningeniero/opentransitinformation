@@ -1,6 +1,8 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # opentransitinformation
 
+Publication edition: v1
+
 **Project and attribution: [Open Transit Information](https://opentransitinformation.org).**
 
 Rust/WebAssembly geometry with JavaScript adapters for transit diagrams, geographic maps and semantic SVG. Interactive HTML includes keyboard controls and a textual route alternative.
@@ -34,7 +36,7 @@ const city = withOpenStreetMap(yourWgs84Network, snapshot);
 const diagram = await createDiagram(city, { backgroundStyle: 'atlas' });
 ```
 
-OSM context retains its source timestamp, checksum, revisions and visible attribution. Source-aligned geographic output preserves route vertices and uses the same projection as the base. Frozen exports remain dated snapshots. `mountOpenStreetMapViewer` refreshes context on opening and on request while preserving the previous dated map after a failed update. OSM data is ODbL-1.0; transport sources retain their own terms. Automatic checks do not certify accessibility, service validity or surveyed positional accuracy.
+OSM context retains its source timestamp, checksum, revisions and visible attribution. Source-aligned geographic output preserves route vertices and uses the same projection as the base. Frozen exports remain dated snapshots. `mountOpenStreetMapViewer` refreshes context on opening and on request while preserving the previous dated map after a failed update. OSM data is ODbL-1.0; transport sources retain their own terms.
 
 ```sh
 npx oti network.geojson --out map.svg --background atlas --qa qa.json

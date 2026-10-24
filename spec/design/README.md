@@ -1,6 +1,8 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # TSS 0.3 - Executable design profiles
 
+Publication edition: v1
+
 OTI derives line width, lane spacing, corner radius, station symbols, label gaps and margins as a proportional system. Text is measured with the embedded font and rendered with the same quoted CSS family and weight. Preserve official names and their original characters. Route codes and colours provide redundant identification; colour alone never identifies a service. Transfers come from explicit shared stop IDs, never from a geometric crossing.
 
 ## Corridors and junctions
@@ -15,18 +17,18 @@ Wheelchair accessibility does not inflate the station symbol. Confirmed accessib
 
 ## Type, colour and interaction
 
-The profiles require main type of at least 16 px; print uses 18 px. Required text contrast is at least 4.5:1 (7:1 for the high-contrast profile); essential graphic separation is at least 3:1. Route casings account for actual context paints rather than only the page background. A single contrasting casing is preferred; a black/white double casing protects mixed surfaces when needed. Insufficient lane space for that treatment is an error. These are scoped diagnostics, not a complete accessibility certification.
+The profiles require main type of at least 16 px; print uses 18 px. Required text contrast is at least 4.5:1 (7:1 for the high-contrast profile); essential graphic separation is at least 3:1. Route casings account for actual context paints rather than only the page background. A single contrasting casing is preferred; a black/white double casing protects mixed surfaces when needed. Insufficient lane space for that treatment is an error.
 
 High-contrast route badges retain route colour in the border when the coloured fill cannot support 7:1 text. Colour-vision diagnostics use public Machado matrices in linear RGB. An sRGB distance below 35 between routes sharing a stop is a heuristic warning, not a WCAG criterion or a prediction of individual perception. Default color mode preserves source values; deterministic adaptive colouring is explicit and retains original assignments in metadata.
 
 Profiles are `schematic`, `geographic`, `print` and `highContrast`. Titles, legends and validity panels wrap with final font metrics. SVG IDs and CSS are scoped per instance; consumers embedding repeated standalone diagrams supply distinct `idPrefix` values. The viewer assigns its own instance prefix, supports search, selection, keyboard, pan, pinch and a textual route alternative. A mobile overview is not a claim that every label is readable without zoom. Product copy defaults to English; explicit `locale: 'es'` provides a secondary Spanish interface without changing network names or geometry.
 
-Footer labels follow the coordinate system and effective rendering mode. Planar or schematic output uses `Diagram not to scale`; WGS84 geographic output uses `Geographic map`. Both source-aligned and generalised geographic output use that label; it does not certify positional accuracy.
+Footer labels follow the coordinate system and effective rendering mode. Planar or schematic output uses `Diagram not to scale`; WGS84 geographic output uses `Geographic map`. Both source-aligned and generalised geographic output use that label.
 
 ## Vector context
 
 `backgroundStyle` accepts `none`, `subtle`, `atlas` and `mono`. Land, water, parks, urban areas, buildings, boundaries, streets and railways use distinct subordinate treatments. Every context layer is clipped to the map area with a local instance ID. Large or remote context never changes the network frame or covers the title, legend or footer. Polygon holes stay holes; rivers may be open lines. Polygon rings remain exact, while `backgroundSimplification` bounds line simplification to 0..3 output pixels (default 0.6).
 
-Context names are secondary 16 px labels; water names are italic with measured advance and extra ink padding. They are considered only after all transport labels and must fit without interfering with routes, symbols, leaders or other labels. A context label may be omitted; it never displaces transport information. Label halos and accessibility-icon backplates preserve separation from supplied surfaces. Context is supplied by the consumer; no maps, names, sources, rights or live services are invented. Dark custom backgrounds are supported technical combinations, not an editorially approved official night theme.
+Context names are secondary 16 px labels; water names are italic with measured advance and extra ink padding. They are considered only after all transport labels and must fit without interfering with routes, symbols, leaders or other labels. A context label may be omitted; it never displaces transport information. Label halos and accessibility-icon backplates preserve separation from supplied surfaces. Context is supplied by the consumer; no maps, names, sources, rights or live services are invented. Dark custom backgrounds are supported.
 
 Source research stays outside the npm distribution. The profiles are OTI design decisions and do not reproduce TfL branding, Johnston fonts or protected maps.
