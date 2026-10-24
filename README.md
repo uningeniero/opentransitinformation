@@ -62,6 +62,8 @@ The package source is in `packages/opentransitinformation`, geometry in `core/ot
 
 ## Version and attribution
 
+Creator: Álvaro Marín Abril. Cite the creator, the Open Transit Information contributors and the version used. See [CITATION.cff](CITATION.cff).
+
 The npm package version, Rust crate version and GitHub release/tag use the same numeric version. Release `X.Y.Z` corresponds to tag `vX.Y.Z`; published archives are immutable. Each release links its npm version and includes the verified package archive. See [CHANGELOG.md](CHANGELOG.md).
 
 Code: Apache-2.0. Documentation: CC-BY-4.0. Font: SIL OFL-1.1. Preserve the applicable licence and [NOTICE](NOTICE) information, including **Open Transit Information - https://opentransitinformation.org**. Third-party assets and input datasets retain their own notices.

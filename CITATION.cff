@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: CC-BY-4.0
 cff-version: 1.2.0
-message: "Credit Open Transit Information and https://opentransitinformation.org when citing this software."
+message: "If you use this software, cite Álvaro Marín Abril, the Open Transit Information contributors and the version used. Project: https://opentransitinformation.org."
 type: software
 title: opentransitinformation
 authors:
+  - family-names: "Marín Abril"
+    given-names: "Álvaro"
   - name: Open Transit Information contributors
 version: 0.3.4
 date-released: 2026-10-23
