@@ -7,6 +7,12 @@ import { serializeSvg } from './svg.mjs';
 import { auditPalette, badgeColors, assignRouteColors } from './color.mjs';
 import { backgroundPaint, routePaint } from './background.mjs';
 import { localeCopy } from './locale.mjs';
+import { createMotionPlan } from './motion.mjs';
+export {
+  createMotionPlan,
+  motionFrame,
+  mountVehicleMotion
+} from './motion.mjs';
 export {
   auditPalette,
   simulateColor,
@@ -245,7 +251,7 @@ export async function createDiagram(input, options = {}) {
     ...options,
     profile
   });
-  return {
+  const diagram = {
     svg,
     layout,
     network,
@@ -265,6 +271,9 @@ export async function createDiagram(input, options = {}) {
         )
       }))
   };
+  if (options.motion)
+    diagram.motion = await createMotionPlan(diagram, options.motion);
+  return diagram;
 }
 export async function renderSvg(input, options) {
   return (await createDiagram(input, options)).svg;

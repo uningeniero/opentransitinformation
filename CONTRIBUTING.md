@@ -9,4 +9,6 @@ Geometry belongs in the Rust core. Update the relevant technical specification b
 
 Run the build, Node tests, TypeScript checks, package audit and release-version check before submitting a pull request. For rendering changes, also run `npm run test:browser`, `npm run test:design` and `npm run test:osm-browser` from the package folder. Use the embedded font for visual checks.
 
+For motion changes, also run `npm run test:motion` and preserve the shared Rust frame plan and browser component used by the website and HTML exports.
+
 Code is Apache-2.0 and documentation is CC-BY-4.0. Add the appropriate SPDX header. Preserve third-party notices. Sign contributions with `git commit -s`. Use branch `main` as the contribution base. Package, Rust crate, npm release and GitHub tag/release versions must agree.

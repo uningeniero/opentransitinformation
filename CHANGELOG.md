@@ -1,7 +1,16 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # Changelog
 
-## 0.3.4
+## 0.4.0
+
+- Add optional demonstrative vehicle motion to existing rendered route parts, with distance-based frames and declared stop dwells calculated in Rust.
+- Expose `createMotionPlan`, `motionFrame`, `mountVehicleMotion` and `viewer.motion`; self-contained HTML uses the same component.
+- Add keyboard Play/Pause controls, reduced-motion handling and clock suspension for hover, focus, hidden documents and offscreen maps.
+- Preserve motion pause and elapsed time when OpenStreetMap context is refreshed.
+- Use visible route button text for accessible names.
+- Include the diagnostics and documentation corrections prepared for unpublished 0.3.3 and 0.3.4.
+
+## 0.3.4 (unreleased)
 
 - Clarify diagnostics for unsupported constraints, extracted networks and required GTFS tables.
 - State CSV and route-text size limits in UTF-16 code units.

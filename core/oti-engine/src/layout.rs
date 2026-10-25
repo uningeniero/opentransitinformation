@@ -799,6 +799,21 @@ pub fn layout(input: &Value) -> Result<Value, String> {
                 ("part", p.part.into()),
                 ("d", p.svg.clone().into()),
                 (
+                    "motionStops",
+                    crate::motion::stop_anchors(
+                        &p.drawn,
+                        &p.stop_ids
+                            .iter()
+                            .filter_map(|id| {
+                                p.stop_positions
+                                    .get(id)
+                                    .or_else(|| stop_map.get(id))
+                                    .map(|point| (id.clone(), *point))
+                            })
+                            .collect::<Vec<_>>(),
+                    ),
+                ),
+                (
                     "continuations",
                     Value::Array(
                         [

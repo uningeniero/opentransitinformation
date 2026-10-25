@@ -207,6 +207,7 @@ export interface DiagramOptions {
   measureText?: (text: string) => number;
   syncHash?: boolean;
   onSelectionChange?: (state: SelectionState) => void;
+  motion?: MotionOptions;
 }
 export interface Statistics {
   routes: number;
@@ -242,6 +243,7 @@ export interface LayoutPath {
   part: number;
   d: string;
   points: Position[];
+  motionStops?: { id: string; fraction: number }[];
   offsets: number[];
   continuations?: Position[][];
 }
@@ -282,6 +284,7 @@ export interface DiagramLayout {
   issues: Issue[];
 }
 export interface Diagram {
+  motion?: MotionPlan;
   svg: string;
   network: Network;
   layout: DiagramLayout;
@@ -312,6 +315,7 @@ export interface View {
   height: number;
 }
 export interface Viewer {
+  motion: MotionController | null;
   diagram: Diagram;
   root: HTMLElement;
   selectRoute(id: string): SelectionState;
@@ -322,6 +326,88 @@ export interface Viewer {
   setView(view: View): void;
   destroy(): void;
 }
+export interface MotionVehicle {
+  id: string;
+  routeId: string;
+  part?: number;
+  phase?: number;
+}
+export interface MotionOptions {
+  mode: 'demo';
+  durationMs?: number;
+  fps?: number;
+  dwellMs?: number;
+  vehicles?: MotionVehicle[];
+  autoplay?: boolean;
+  onStateChange?: (state: MotionState) => void;
+}
+export interface MotionPlan {
+  mode: 'demo';
+  networkId: string;
+  width: number;
+  height: number;
+  mapBounds?: { x: number; y: number; width: number; height: number };
+  durationMs: number;
+  fps: number;
+  frameCount: number;
+  vehicles: {
+    id: string;
+    routeId: string;
+    part: number;
+    length: number;
+    closed: boolean;
+    stops: { id: string; fraction: number }[];
+    frames: [number, number, number, number, number, number | null][];
+  }[];
+}
+export interface MotionFrame {
+  mode: 'demo';
+  timeMs: number;
+  frame: number;
+  vehicles: {
+    id: string;
+    routeId: string;
+    part: number;
+    position: Position;
+    heading: number;
+    progress: number;
+    opacity: number;
+    stopId: string | null;
+  }[];
+}
+export interface MotionState {
+  mode: 'demo';
+  state: 'playing' | 'paused' | 'suspended' | 'destroyed';
+  playing: boolean;
+  requestedPlaying: boolean;
+  elapsedMs: number;
+  reducedMotion: boolean;
+}
+export interface MotionController {
+  plan: MotionPlan;
+  root: HTMLElement;
+  play(): void;
+  pause(): void;
+  seek(elapsedMs: number): MotionState;
+  getState(): MotionState;
+  resize(): void;
+  destroy(): void;
+}
+export function createMotionPlan(
+  diagram: Pick<Diagram, 'layout' | 'network'>,
+  options: MotionOptions
+): Promise<MotionPlan>;
+export function motionFrame(plan: MotionPlan, elapsedMs: number): MotionFrame;
+export function mountVehicleMotion(
+  container: Element,
+  plan: MotionPlan,
+  options?: {
+    autoplay?: boolean;
+    locale?: 'en' | 'es';
+    controlsContainer?: HTMLElement;
+    onStateChange?: (state: MotionState) => void;
+  }
+): MotionController;
 export interface OpenStreetMapRefreshResult {
   updated: boolean;
   provenance?: OpenStreetMapProvenance;

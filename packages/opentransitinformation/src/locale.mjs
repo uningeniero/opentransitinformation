@@ -1,5 +1,10 @@
 // SPDX-License-Identifier: Apache-2.0
 const en = {
+  motionControls: 'Vehicle motion controls',
+  motionCaption: 'Illustrative route movement',
+  motionPlay: 'Play motion',
+  motionPause: 'Pause motion',
+  motionResume: 'Resume motion',
   routes: 'Routes',
   results: 'Results',
   controls: 'Map controls',
@@ -33,13 +38,19 @@ const en = {
   baseUpdateFailed: (date) => `Update unavailable. Showing OSM data: ${date}`,
   route: (code, name) => `Route ${code}: ${name}`,
   selectRoute: (code, name) => `Select route ${code}: ${name}`,
-  routeInfo: (code, name, count) => `Route ${code} - ${name}. ${count} ${count === 1 ? 'stop' : 'stops'}.`,
+  routeInfo: (code, name, count) =>
+    `Route ${code} - ${name}. ${count} ${count === 1 ? 'stop' : 'stops'}.`,
   routeResult: (code, name) => `Route ${code} - ${name}`,
   stopInfo: (name, codes, access) => `${name}. Routes ${codes}. ${access}.`,
   description: (routes, stops) =>
     `${routes} ${routes === 1 ? 'route' : 'routes'} and ${stops} ${stops === 1 ? 'stop' : 'stops'}. Each route is identified by code and colour. Crossings without a station symbol do not indicate an interchange.`
 };
 const es = {
+  motionControls: 'Controles de movimiento de vehículos',
+  motionCaption: 'Movimiento ilustrativo de líneas',
+  motionPlay: 'Reproducir movimiento',
+  motionPause: 'Pausar movimiento',
+  motionResume: 'Reanudar movimiento',
   routes: 'Líneas',
   results: 'Resultados',
   controls: 'Controles del mapa',
@@ -67,7 +78,8 @@ const es = {
   platformLinks:
     'Los enlaces discontinuos de estación son esquemáticos, no indicaciones peatonales',
   noResults: 'No se han encontrado resultados.',
-  resultCount: (count) => `${count} ${count === 1 ? 'resultado' : 'resultados'}.`,
+  resultCount: (count) =>
+    `${count} ${count === 1 ? 'resultado' : 'resultados'}.`,
   updateBase: 'Actualizar OpenStreetMap',
   updatingBase: 'Actualizando el mapa base...',
   baseSnapshot: (date) => `Datos OSM: ${date}`,

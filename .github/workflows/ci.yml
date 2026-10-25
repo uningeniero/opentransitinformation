@@ -27,5 +27,5 @@ jobs:
       - run: cargo test --manifest-path core/oti-engine/Cargo.toml
       - run: npx playwright install --with-deps chromium
         working-directory: packages/opentransitinformation
-      - run: npm run test:browser && npm run test:design && npm run test:osm-browser
+      - run: npm run test:browser && npm run test:design && npm run test:osm-browser && npm run test:motion
         working-directory: packages/opentransitinformation

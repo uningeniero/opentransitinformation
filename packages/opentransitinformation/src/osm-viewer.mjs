@@ -60,6 +60,16 @@ export async function mountOpenStreetMapViewer(container, input, options = {}) {
         if (state.stopId) nextViewer.selectStop(state.stopId);
         else if (state.routeId) nextViewer.selectRoute(state.routeId);
         const restoreFocus = doc.activeElement === button;
+        const motionState = viewer.motion?.getState();
+        if (motionState && nextViewer.motion) {
+          nextViewer.motion.seek(motionState.elapsedMs);
+          if (
+            motionState.requestedPlaying &&
+            !nextViewer.motion.getState().reducedMotion
+          )
+            nextViewer.motion.play();
+          else nextViewer.motion.pause();
+        }
         viewer.destroy();
         container.replaceChildren(nextViewer.root);
         viewer = nextViewer;
@@ -88,6 +98,9 @@ export async function mountOpenStreetMapViewer(container, input, options = {}) {
         })
       : refresh();
   return {
+    get motion() {
+      return viewer.motion;
+    },
     get diagram() {
       return viewer.diagram;
     },

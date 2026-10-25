@@ -5,6 +5,7 @@ mod geometry;
 mod json;
 mod lanes;
 mod layout;
+mod motion;
 mod osm;
 mod osm_route;
 mod stations;
@@ -47,7 +48,9 @@ pub unsafe extern "C" fn oti_run(ptr: *const u8, len: usize) -> *mut u8 {
             .map_err(|_| "Invalid UTF-8".into())
             .and_then(json::parse)
             .and_then(|v| {
-                if v.get("operation").str() == "openstreetmap-route" {
+                if v.get("operation").str() == "motion" {
+                    motion::plan(&v)
+                } else if v.get("operation").str() == "openstreetmap-route" {
                     osm_route::build(&v)
                 } else if v.get("operation").str() == "openstreetmap" {
                     osm::import(v.get("data"))

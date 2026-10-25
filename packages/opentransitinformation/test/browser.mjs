@@ -19,7 +19,10 @@ await writeFile(
   path.join(out, 'demonstration-en.html'),
   await toHtml(network, { generatedAt: '2026-10-23T00:00:00Z', locale: 'en' })
 );
-const browser = await chromium.launch({ channel: process.env.OTI_BROWSER_CHANNEL || 'msedge', headless: true });
+const browser = await chromium.launch({
+  channel: process.env.OTI_BROWSER_CHANNEL || 'msedge',
+  headless: true
+});
 const report = {};
 try {
   for (const [mode, width, height] of [
@@ -92,7 +95,7 @@ try {
       .getByRole('button', { name: 'Ver toda la red', exact: true })
       .click();
     const route = page.getByRole('button', {
-      name: 'Seleccionar línea 1: Puerto - Estación',
+      name: '1 Puerto - Estación',
       exact: true
     });
     await route.click();
@@ -110,11 +113,17 @@ try {
       )
     );
     await search.fill('no-match-for-this-search');
-    assert.equal(await page.locator('.oti-info').textContent(), '0 resultados.');
+    assert.equal(
+      await page.locator('.oti-info').textContent(),
+      '0 resultados.'
+    );
     await search.fill('estacion');
     const spanishMatches = await page.locator('.oti-results button').count();
     assert.ok(spanishMatches > 1);
-    assert.equal(await page.locator('.oti-info').textContent(), `${spanishMatches} resultados.`);
+    assert.equal(
+      await page.locator('.oti-info').textContent(),
+      `${spanishMatches} resultados.`
+    );
     await search.fill('estacion del este');
     await search.press('ArrowDown');
     await page.keyboard.press('Enter');
@@ -141,7 +150,9 @@ try {
       path: path.join(out, `demostracion-${mode}.png`),
       fullPage: true
     });
-    await page.goto(pathToFileURL(path.join(out, 'demonstration-en.html')).href);
+    await page.goto(
+      pathToFileURL(path.join(out, 'demonstration-en.html')).href
+    );
     await page.waitForFunction(() => window.otiViewer);
     const englishSearch = page.getByRole('searchbox');
     await englishSearch.fill('estacion del este');
@@ -151,7 +162,10 @@ try {
     await englishSearch.fill('estacion');
     const englishMatches = await page.locator('.oti-results button').count();
     assert.ok(englishMatches > 1);
-    assert.equal(await page.locator('.oti-info').textContent(), `${englishMatches} results.`);
+    assert.equal(
+      await page.locator('.oti-info').textContent(),
+      `${englishMatches} results.`
+    );
     assert.equal(errors.length, 0, errors.join('\n'));
     assert.equal(requests.length, 0);
     report[mode].searchCountGrammar = { es: true, en: true };

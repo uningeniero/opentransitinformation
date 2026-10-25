@@ -1,10 +1,10 @@
 {
   "name": "opentransitinformation",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "description": "Transit diagrams, OpenStreetMap geographic context and interactive HTML maps with keyboard controls and textual route alternatives, using Rust and WebAssembly.",
   "type": "module",
   "license": "Apache-2.0",
-  "author": "Open Transit Information contributors",
+  "author": "Álvaro Marín Abril",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/uningeniero/opentransitinformation.git",
@@ -70,7 +70,8 @@
     "prepublishOnly": "npm run build && npm test && npm run check:types && npm run check:package && npm run check:release",
     "test:design": "node test/design-browser.mjs",
     "check:release": "node scripts/check-release.mjs",
-    "test:osm-browser": "node test/osm-browser.mjs"
+    "test:osm-browser": "node test/osm-browser.mjs",
+    "test:motion": "node test/motion-browser.mjs"
   },
   "dependencies": {
     "fflate": "^0.8.2",
@@ -83,5 +84,8 @@
     "playwright": "^1.56.0",
     "prettier": "^3.9.10",
     "typescript": "^5.9.3"
-  }
+  },
+  "contributors": [
+    "Open Transit Information contributors"
+  ]
 }

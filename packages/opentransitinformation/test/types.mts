@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
 import {
   createDiagram,
+  createMotionPlan,
+  motionFrame,
+  mountVehicleMotion,
   fromText,
   mountViewer,
   extractDocument,
@@ -20,6 +23,16 @@ const options: DiagramOptions = {
 };
 const network: Network = await fromText('1: A > B');
 const diagram = await createDiagram(network, options);
+const motionPlan = await createMotionPlan(diagram, {
+  mode: 'demo',
+  autoplay: false
+});
+const frame = motionFrame(motionPlan, 1000);
+const motion = mountVehicleMotion(document.createElement('div'), motionPlan);
+motion.seek(frame.timeMs);
+motion.pause();
+const paused: boolean = motion.getState().requestedPlaying;
+motion.destroy();
 const svg: string = diagram.svg;
 const html: string = await toHtml(network, options);
 const viewer = await mountViewer(
@@ -29,12 +42,13 @@ const viewer = await mountViewer(
 );
 viewer.selectRoute(network.routes[0].id);
 viewer.setView(viewer.getView());
+viewer.motion?.pause();
 const draft = await extractDocument(new Uint8Array(), {
   mimeType: 'image/png',
   extractor: async () => ({ network, confidence: 0.8 })
 });
 confirmExtraction(draft, { author: 'Reviewer', reason: 'Checked' });
-console.log(svg, html);
+console.log(svg, html, paused);
 const bounds: [number, number, number, number] = [-0.16, 51.49, -0.13, 51.52];
 const snapshot = await loadOpenStreetMap({ bounds, maxAgeMs: 86400000 });
 const city = withOpenStreetMap(

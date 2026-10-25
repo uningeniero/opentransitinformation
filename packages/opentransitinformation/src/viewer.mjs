@@ -4,6 +4,7 @@ import { OtiError } from './model.mjs';
 import { stableId } from './svg.mjs';
 import { badgeColors } from './color.mjs';
 import { localeCopy, accessCopy } from './locale.mjs';
+import { mountVehicleMotion } from './motion.mjs';
 const css = `.oti-viewer{font:16px/1.45 system-ui,sans-serif;color:#162536;background:#fff;border:1px solid #d9dfe4;border-radius:14px;overflow:hidden;max-width:100%;color-scheme:light}.oti-viewer *{box-sizing:border-box}.oti-viewer button,.oti-viewer input{font:inherit;min-height:44px;color:#162536;background:#fff;border:1px solid #c0cbd4;border-radius:7px;padding:8px 12px}.oti-viewer button{cursor:pointer}.oti-viewer button:hover{background:#f0f5f8}.oti-viewer :focus-visible{outline:3px solid #005b96;outline-offset:3px}.oti-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:16px;border-bottom:1px solid #d9dfe4}.oti-search{flex:1;min-width:160px;display:flex;gap:8px;align-items:center}.oti-search input{width:100%;min-width:100px}.oti-content{display:grid;grid-template-columns:minmax(0,1fr) 260px}.oti-canvas{min-width:0;overflow:hidden;position:relative;touch-action:pan-y}.oti-canvas>svg{display:block;width:100%;height:auto;min-height:320px;max-height:85vh;touch-action:none;user-select:none}.oti-sidebar{padding:16px;border-left:1px solid #e2e7eb;max-height:760px;overflow:auto}.oti-sidebar h2{font-size:18px;margin:0 0 12px}.oti-route-list,.oti-results{list-style:none;padding:0;margin:0}.oti-route-list li{margin-bottom:7px}.oti-route-list button{width:100%;text-align:left;display:flex;align-items:center;gap:10px}.oti-route-list button[aria-pressed=true]{background:#e8f1f7;border-color:#005b96}.oti-route-code{display:inline-flex;align-items:center;justify-content:center;min-width:35px;padding:3px 7px;border-radius:5px;font-weight:700}.oti-info{padding:14px 16px;border-top:1px solid #d9dfe4;min-height:56px}.oti-results{max-height:260px;overflow:auto}.oti-results button{width:100%;text-align:left;margin:3px 0}.oti-text{border-top:1px solid #d9dfe4;padding:16px}.oti-text summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600}.oti-text li{margin:4px 0}.oti-sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:700px){.oti-content{display:flex;flex-direction:column}.oti-sidebar{border-left:0;border-top:1px solid #e2e7eb;max-height:260px}.oti-route-list{display:flex;flex-wrap:wrap;gap:6px}.oti-route-list li{margin:0;flex:1 1 140px}.oti-toolbar{padding:10px}.oti-search{flex-basis:100%}.oti-canvas>svg{min-height:360px}.oti-text{padding:12px}}@media print{.oti-toolbar,.oti-sidebar,.oti-info,.oti-text{display:none}.oti-content{display:block}.oti-viewer{border:0}.oti-canvas>svg{max-height:none;width:100%;height:auto}}@media(prefers-reduced-motion:reduce){.oti-viewer *{scroll-behavior:auto!important;transition:none!important}}`;
 const norm = (s) =>
   s
@@ -86,8 +87,7 @@ export async function mountViewer(container, input, options = {}) {
     const li = element(doc, 'li'),
       button = element(doc, 'button', null, {
         type: 'button',
-        'aria-pressed': 'false',
-        'aria-label': copy.selectRoute(r.shortName, r.name)
+        'aria-pressed': 'false'
       });
     const badge = element(doc, 'span', r.shortName, {
       class: 'oti-route-code'
@@ -96,7 +96,7 @@ export async function mountViewer(container, input, options = {}) {
     badge.style.backgroundColor = colors.background;
     badge.style.color = colors.foreground;
     badge.style.border = `2px solid ${colors.border}`;
-    button.append(badge, element(doc, 'span', r.name));
+    button.append(badge, doc.createTextNode(' '), element(doc, 'span', r.name));
     on(button, 'click', () => selectRoute(r.id));
     li.append(button);
     routeList.append(li);
@@ -155,7 +155,9 @@ export async function mountViewer(container, input, options = {}) {
   if (geographicBase) {
     svg.setAttribute('width', String(full.width));
     svg.setAttribute('height', String(full.height));
-    const credit = element(doc, 'p', null, { class: 'oti-attribution oti-map-credit' });
+    const credit = element(doc, 'p', null, {
+      class: 'oti-attribution oti-map-credit'
+    });
     credit.style.cssText =
       'margin:0;padding:7px 12px;border-top:1px solid #d9dfe4;font-size:14px;line-height:1.4;background:#fff;color:#162536';
     const link = element(doc, 'a', '© OpenStreetMap contributors', {
@@ -165,12 +167,22 @@ export async function mountViewer(container, input, options = {}) {
     });
     link.style.color = '#162536';
     const rawDate = diagram.network.metadata.baseMap.dataAsOf;
-    const sourceDate = typeof rawDate === 'string' && Number.isFinite(Date.parse(rawDate))
-      ? new Date(rawDate).toISOString().slice(0,16).replace('T',' ') + ' UTC' : copy.unknownDate;
-    credit.append(link, doc.createTextNode(' - ODbL 1.0'), element(doc,'br'),
-      doc.createTextNode(`${copy.baseMapDate}: ${sourceDate}`));
+    const sourceDate =
+      typeof rawDate === 'string' && Number.isFinite(Date.parse(rawDate))
+        ? new Date(rawDate).toISOString().slice(0, 16).replace('T', ' ') +
+          ' UTC'
+        : copy.unknownDate;
+    credit.append(
+      link,
+      doc.createTextNode(' - ODbL 1.0'),
+      element(doc, 'br'),
+      doc.createTextNode(`${copy.baseMapDate}: ${sourceDate}`)
+    );
     if (diagram.network.metadata.source?.name)
-      credit.append(element(doc,'br'),doc.createTextNode(diagram.network.metadata.source.name));
+      credit.append(
+        element(doc, 'br'),
+        doc.createTextNode(diagram.network.metadata.source.name)
+      );
     if (rawDate) credit.setAttribute('data-source-time', String(rawDate));
     if (diagram.network.metadata.excerptCaption) {
       const note = element(doc, 'p', diagram.network.metadata.excerptCaption, {
@@ -186,9 +198,13 @@ export async function mountViewer(container, input, options = {}) {
     svg.style.maxHeight = 'none';
     svg.style.minHeight = '0';
     fitMapFrame = () => {
-      const available = win.innerHeight - svg.getBoundingClientRect().top - credit.getBoundingClientRect().height - 16;
+      const available =
+        win.innerHeight -
+        svg.getBoundingClientRect().top -
+        credit.getBoundingClientRect().height -
+        16;
       const height = Math.floor(Math.max(260, Math.min(720, available)));
-      if (svg.style.height !== height+'px') svg.style.height = height+'px';
+      if (svg.style.height !== height + 'px') svg.style.height = height + 'px';
     };
     fitMapFrame();
   }
@@ -246,7 +262,9 @@ export async function mountViewer(container, input, options = {}) {
   ) {
     const factor = Math.min(
       1,
-      (Math.min(svg.clientWidth/full.width,svg.clientHeight/full.height) * diagram.style.fontSize) / 14
+      (Math.min(svg.clientWidth / full.width, svg.clientHeight / full.height) *
+        diagram.style.fontSize) /
+        14
     );
     view = {
       x: full.x + (full.width * (1 - factor)) / 2,
@@ -592,8 +610,17 @@ export async function mountViewer(container, input, options = {}) {
     )
       selectStop(params.get('stop'));
   }
+  const motion = diagram.motion
+    ? mountVehicleMotion(svg, diagram.motion, {
+        ...options.motion,
+        locale: options.locale,
+        controlsContainer: toolbar
+      })
+    : null;
+  if (motion) apply();
   return {
     diagram,
+    motion,
     root,
     selectRoute,
     selectStop,
@@ -610,6 +637,7 @@ export async function mountViewer(container, input, options = {}) {
       updateView();
     },
     destroy: () => {
+      motion?.destroy();
       abort.abort();
       if (root.parentNode === container) root.remove();
     }

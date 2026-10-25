@@ -7,8 +7,8 @@ authors:
   - family-names: "Marín Abril"
     given-names: "Álvaro"
   - name: Open Transit Information contributors
-version: 0.3.4
-date-released: 2026-10-23
+version: 0.4.0
+date-released: 2026-10-25
 license: Apache-2.0
 url: https://opentransitinformation.org
 repository-code: https://github.com/uningeniero/opentransitinformation

@@ -65,7 +65,7 @@ export function serializeSvg(network, layout, style, measured, options = {}) {
   const fontFamily = `${options.font?.family || style.fontFamily} ${suffix}`;
   const metadata = {
     ...network.metadata,
-    generator: 'opentransitinformation@0.3.4',
+    generator: 'opentransitinformation@0.4.0',
     profile: options.profile || style.mode,
     generatedAt: options.generatedAt || new Date().toISOString()
   };

@@ -59,9 +59,16 @@ const htmlPath = fileURLToPath(
 );
 await writeFile(
   htmlPath,
-  await toHtml(network, { backgroundStyle: 'atlas', openStreetMap: settings })
+  await toHtml(network, {
+    backgroundStyle: 'atlas',
+    openStreetMap: settings,
+    motion: { mode: 'demo' }
+  })
 );
-const browser = await chromium.launch({ channel: process.env.OTI_BROWSER_CHANNEL || 'msedge', headless: true });
+const browser = await chromium.launch({
+  channel: process.env.OTI_BROWSER_CHANNEL || 'msedge',
+  headless: true
+});
 const report = { checks: [] };
 try {
   const page = await browser.newPage({
@@ -107,6 +114,9 @@ try {
   );
   const result = await page.evaluate(async () => {
     const viewer = window.otiViewer;
+    viewer.motion.seek(1400);
+    viewer.motion.pause();
+    const motionBefore = viewer.motion.getState();
     viewer.selectStop('a');
     viewer.setView({
       ...viewer.getView(),
@@ -129,7 +139,9 @@ try {
       calls: window.osmTest.calls,
       date: viewer.diagram.network.metadata.baseMap.dataAsOf,
       nextTime,
-      controls: document.querySelectorAll('.oti-osm-tools').length
+      controls: document.querySelectorAll('.oti-osm-tools').length,
+      motionBefore,
+      motionAfter: viewer.motion.getState()
     };
   });
   assert.equal(result.samePromise, true);
@@ -139,8 +151,13 @@ try {
   assert.deepEqual(result.after, result.before);
   assert.equal(result.date, result.nextTime);
   assert.equal(result.controls, 1);
+  assert.equal(result.motionAfter.elapsedMs, result.motionBefore.elapsedMs);
+  assert.equal(result.motionAfter.requestedPlaying, false);
   report.checks.push(
     'Successful concurrent refresh fetches once and preserves selection and view'
+  );
+  report.checks.push(
+    'Refreshing context preserves paused motion and elapsed time'
   );
   const failed = await page.evaluate(async () => {
     window.osmTest.mode = 'failure';
@@ -188,7 +205,8 @@ try {
     const bounds = [-0.16, 51.49, -0.13, 51.52];
     const before = window.osmTest.calls;
     const cached = await OTI.mountOpenStreetMapViewer(container, original, {
-      backgroundStyle: 'atlas', openStreetMap: { bounds }
+      backgroundStyle: 'atlas',
+      openStreetMap: { bounds }
     });
     const cachedResult = await cached.whenRefreshed;
     cached.destroy();
@@ -196,11 +214,16 @@ try {
     delete withoutCache.metadata.baseMap;
     withoutCache.background = [];
     const fresh = await OTI.mountOpenStreetMapViewer(container, withoutCache, {
-      backgroundStyle: 'atlas', openStreetMap: { bounds }
+      backgroundStyle: 'atlas',
+      openStreetMap: { bounds }
     });
     const freshResult = await fresh.whenRefreshed;
-    const result = { calls: window.osmTest.calls - before, cached: cachedResult.updated,
-      fresh: freshResult.updated, date: fresh.diagram.network.metadata.baseMap.dataAsOf };
+    const result = {
+      calls: window.osmTest.calls - before,
+      cached: cachedResult.updated,
+      fresh: freshResult.updated,
+      date: fresh.diagram.network.metadata.baseMap.dataAsOf
+    };
     fresh.destroy();
     return result;
   });
@@ -208,7 +231,9 @@ try {
   assert.equal(initialLoads.cached, true);
   assert.equal(initialLoads.fresh, true);
   assert.ok(initialLoads.date);
-  report.checks.push('Opening refreshes a cached map; an uncached map fetches once before mounting');
+  report.checks.push(
+    'Opening refreshes a cached map; an uncached map fetches once before mounting'
+  );
   assert.deepEqual(errors, []);
   assert.deepEqual(requests, []);
   report.passed = true;
