@@ -165,6 +165,14 @@ try {
     await page.evaluate(() => otiViewer.motion.getState().playing),
     false
   );
+  await page.locator('.oti-motion-controls button').click();
+  await page.waitForFunction(() => otiViewer.motion.getState().playing);
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.waitForFunction(() => !otiViewer.motion.getState().reducedMotion);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.waitForFunction(
+    () => !otiViewer.motion.getState().requestedPlaying
+  );
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   assert.equal(
     await page.evaluate(() => otiViewer.motion.getState().requestedPlaying),
@@ -324,6 +332,7 @@ try {
     alreadyHoveredMountSuspends: true,
     alreadyFocusedMountSuspends: true,
     parallelLaneUnobscuredAt390And1440: true,
+    repeatedReducedMotionPreferencePausesExplicitPlayback: true,
     offscreenClockSuspends: true,
     hiddenClockSuspends: true,
     userPauseFreezesElapsed: true

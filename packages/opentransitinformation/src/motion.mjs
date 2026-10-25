@@ -202,6 +202,12 @@ export function mountVehicleMotion(container, plan, options = {}) {
     group.setAttribute('clip-path', `url(#${componentId}-clip)`);
   }
   const markers = new Map();
+  const strokeWidth = (path) => {
+    const computed = Number.parseFloat(win.getComputedStyle(path).strokeWidth);
+    return Number.isFinite(computed)
+      ? computed
+      : Number.parseFloat(path.getAttribute('stroke-width'));
+  };
   const strokes = new Map();
   for (const route of svg.querySelectorAll(
     '[data-layer="routes"] [data-route-id]'
@@ -215,10 +221,7 @@ export function mountVehicleMotion(container, plan, options = {}) {
   }
   for (const v of plan.vehicles) {
     const stroke = strokes.get(v.routeId);
-    if (
-      !stroke ||
-      !(Number.parseFloat(win.getComputedStyle(stroke).strokeWidth) > 0)
-    )
+    if (!stroke || !(strokeWidth(stroke) > 0))
       fail('Motion requires matching rendered route strokes');
     const marker = element('g', {
       'data-motion-vehicle': v.id,
@@ -283,7 +286,8 @@ export function mountVehicleMotion(container, plan, options = {}) {
   if (options.controlsContainer) options.controlsContainer.append(controls);
   else svg.insertAdjacentElement('afterend', controls);
   const reduced = win.matchMedia?.('(prefers-reduced-motion: reduce)');
-  let wanted = false,
+  let reducedMotion = !!reduced?.matches,
+    wanted = false,
     started = false,
     destroyed = false,
     raf = 0,
@@ -308,7 +312,7 @@ export function mountVehicleMotion(container, plan, options = {}) {
     playing: !destroyed && wanted && !suspended(),
     requestedPlaying: wanted,
     elapsedMs: total(),
-    reducedMotion: !!reduced?.matches
+    reducedMotion
   });
   const draw = () => {
     for (const pose of motionFrame(plan, total()).vehicles) {
@@ -326,7 +330,7 @@ export function mountVehicleMotion(container, plan, options = {}) {
     const units = matrix ? Math.hypot(matrix.a, matrix.b) : 1;
     scale = units > 0 ? 1 / units : 1;
     for (const { glyph, stroke } of markers.values()) {
-      const width = Number.parseFloat(win.getComputedStyle(stroke).strokeWidth);
+      const width = strokeWidth(stroke);
       glyph.setAttribute(
         'transform',
         `scale(${Math.min(scale, Math.max(0, width) / 12)})`
@@ -397,8 +401,9 @@ export function mountVehicleMotion(container, plan, options = {}) {
   });
   on(doc, 'visibilitychange', update);
   if (reduced)
-    on(reduced, 'change', () => {
-      if (reduced.matches) pause();
+    on(reduced, 'change', (event) => {
+      reducedMotion = event.matches;
+      if (reducedMotion) pause();
       else update();
     });
   const observer = win.IntersectionObserver
@@ -421,7 +426,7 @@ export function mountVehicleMotion(container, plan, options = {}) {
   });
   resize();
   draw();
-  if (options.autoplay && !reduced?.matches) play();
+  if (options.autoplay && !reducedMotion) play();
   else update();
   return {
     plan,
