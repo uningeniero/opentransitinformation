@@ -183,6 +183,36 @@ try {
     });
   });
   await page.waitForTimeout(100);
+  await page.locator('svg').hover();
+  await page.evaluate(() => {
+    component.destroy();
+    window.component = OTI.mountVehicleMotion(savedSvg, savedPlan, {
+      autoplay: true
+    });
+  });
+  assert.equal(
+    await page.evaluate(() => component.getState().state),
+    'suspended'
+  );
+  await page.waitForTimeout(100);
+  assert.equal(await page.evaluate(() => component.getState().elapsedMs), 0);
+  await page.mouse.move(0, 0);
+  await page.waitForFunction(() => component.getState().state === 'playing');
+  await page.locator('svg').focus();
+  await page.evaluate(() => {
+    component.destroy();
+    window.component = OTI.mountVehicleMotion(savedSvg, savedPlan, {
+      autoplay: true
+    });
+  });
+  assert.equal(
+    await page.evaluate(() => component.getState().state),
+    'suspended'
+  );
+  await page.waitForTimeout(100);
+  assert.equal(await page.evaluate(() => component.getState().elapsedMs), 0);
+  await page.evaluate(() => savedSvg.blur());
+  await page.waitForFunction(() => component.getState().state === 'playing');
   await page.evaluate(() => {
     const spacer = document.createElement('div');
     spacer.style.height = '3000px';
@@ -234,10 +264,66 @@ try {
     (await page.evaluate(() => component.getState().elapsedMs)) > hidden
   );
   await page.evaluate(() => component.destroy());
+  await page.evaluate(async () => {
+    document.body.replaceChildren();
+    const host = document.createElement('div');
+    host.innerHTML =
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" style="display:block;width:100%;height:auto"><g data-layer="routes"><g data-route-id="a" data-color="#005b96"><path d="M100 200H1100" stroke="#005b96" stroke-width="8" fill="none"/></g><g data-route-id="b" data-color="#a91642"><path d="M100 212H1100" stroke="#a91642" stroke-width="8" fill="none"/></g></g></svg>';
+    document.body.append(host);
+    const diagram = {
+      network: { id: 'parallel-lanes' },
+      layout: {
+        width: 1200,
+        height: 800,
+        paths: [
+          {
+            routeId: 'a',
+            part: 0,
+            points: [
+              [100, 200],
+              [1100, 200]
+            ]
+          }
+        ]
+      }
+    };
+    const plan = await OTI.createMotionPlan(diagram, {
+      mode: 'demo',
+      durationMs: 4000,
+      fps: 10,
+      dwellMs: 0,
+      vehicles: [{ id: 'parallel-test', routeId: 'a', phase: 0.5 }]
+    });
+    window.component = OTI.mountVehicleMotion(host, plan);
+  });
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 1100 });
+    await page.evaluate(() => component.resize());
+    const neighborCovered = await page.evaluate(() => {
+      const svg = document.querySelector('svg');
+      const body = svg.querySelector('[data-motion-vehicle] rect');
+      const point = svg.createSVGPoint();
+      point.x = 600;
+      point.y = 212;
+      const local = point
+        .matrixTransform(svg.getScreenCTM())
+        .matrixTransform(body.getScreenCTM().inverse());
+      return body.isPointInFill(local);
+    });
+    assert.equal(
+      neighborCovered,
+      false,
+      `Vehicle must not cover its parallel neighbour at ${width}px`
+    );
+  }
+  await page.evaluate(() => component.destroy());
   report.checks.push({
     reducedAutoplaySuppressed: true,
     noAutomaticRestartAfterPreferenceChange: true,
     standaloneComponent: true,
+    alreadyHoveredMountSuspends: true,
+    alreadyFocusedMountSuspends: true,
+    parallelLaneUnobscuredAt390And1440: true,
     offscreenClockSuspends: true,
     hiddenClockSuspends: true,
     userPauseFreezesElapsed: true

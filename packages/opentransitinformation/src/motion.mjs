@@ -202,7 +202,24 @@ export function mountVehicleMotion(container, plan, options = {}) {
     group.setAttribute('clip-path', `url(#${componentId}-clip)`);
   }
   const markers = new Map();
+  const strokes = new Map();
+  for (const route of svg.querySelectorAll(
+    '[data-layer="routes"] [data-route-id]'
+  )) {
+    const color = route.getAttribute('data-color');
+    const path = [...route.querySelectorAll('path')].find(
+      (p) =>
+        p.getAttribute('stroke') === color && !p.classList.contains('casing')
+    );
+    if (path) strokes.set(route.getAttribute('data-route-id'), path);
+  }
   for (const v of plan.vehicles) {
+    const stroke = strokes.get(v.routeId);
+    if (
+      !stroke ||
+      !(Number.parseFloat(win.getComputedStyle(stroke).strokeWidth) > 0)
+    )
+      fail('Motion requires matching rendered route strokes');
     const marker = element('g', {
       'data-motion-vehicle': v.id,
       'data-motion-route': v.routeId
@@ -242,7 +259,7 @@ export function mountVehicleMotion(container, plan, options = {}) {
     );
     marker.append(glyph);
     group.append(marker);
-    markers.set(v.id, { marker, glyph });
+    markers.set(v.id, { marker, glyph, stroke });
   }
   svg.insertBefore(group, svg.querySelector('[data-layer="labels"]'));
   const controls = doc.createElement('div');
@@ -273,8 +290,8 @@ export function mountVehicleMotion(container, plan, options = {}) {
     elapsed = 0,
     anchor = null,
     inView = true,
-    hover = false,
-    focus = false,
+    hover = svg.matches(':hover'),
+    focus = svg.contains(doc.activeElement),
     scale = 1;
   const suspended = () => doc.hidden || !inView || hover || focus;
   const now = () => win.performance.now();
@@ -308,8 +325,13 @@ export function mountVehicleMotion(container, plan, options = {}) {
     const matrix = svg.getScreenCTM();
     const units = matrix ? Math.hypot(matrix.a, matrix.b) : 1;
     scale = units > 0 ? 1 / units : 1;
-    for (const { glyph } of markers.values())
-      glyph.setAttribute('transform', `scale(${scale})`);
+    for (const { glyph, stroke } of markers.values()) {
+      const width = Number.parseFloat(win.getComputedStyle(stroke).strokeWidth);
+      glyph.setAttribute(
+        'transform',
+        `scale(${Math.min(scale, Math.max(0, width) / 12)})`
+      );
+    }
   };
   const stopClock = () => {
     if (anchor !== null) {
