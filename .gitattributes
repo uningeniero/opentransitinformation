@@ -2,3 +2,5 @@
 * text=auto eol=lf
 *.ttf binary
 *.wasm binary
+/OFL.txt -text
+/THIRD_PARTY_LICENSES.txt -text

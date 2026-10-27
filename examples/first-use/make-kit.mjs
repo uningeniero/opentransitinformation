@@ -13,7 +13,7 @@ const exampleFiles = [
   '02-gtfs/feed/stop_times.txt', '02-gtfs/feed/calendar.txt', '02-gtfs/feed/shapes.txt', '02-gtfs/feed/feed_info.txt', '02-gtfs/feed/LICENSE.txt',
   '03-web/index.html', '03-web/app.mjs', '03-web/page.css', '03-web/prepare.mjs', '03-web/serve.mjs'
 ];
-const paths = ['.gitattributes', 'LICENSE', 'NOTICE', 'docs/getting-started.md', ...exampleFiles.map((p) => `examples/first-use/${p}`)].sort();
+const paths = ['.gitattributes', 'LICENSE', 'LICENSES/CC-BY-4.0.txt', 'NOTICE', 'OFL.txt', 'THIRD_PARTY_LICENSES.txt', 'docs/getting-started.md', ...exampleFiles.map((p) => `examples/first-use/${p}`)].sort();
 const entries = {}, files = [], mtime = new Date(2000, 0, 1, 0, 0, 0);
 for (const path of paths) {
   const bytes = new Uint8Array(await readFile(new URL(path, repository)));
