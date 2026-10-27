@@ -1,0 +1,10 @@
+SPDX-License-Identifier: CC-BY-4.0
+
+Copyright 2026 Álvaro Marín Abril and Open Transit Information contributors.
+https://opentransitinformation.org
+
+This synthetic teaching dataset is licensed under Creative Commons Attribution
+4.0 International: https://creativecommons.org/licenses/by/4.0/
+
+All agency, stop, route, trip, shape and service records are teaching examples.
+They do not describe an operator, a passenger service or stop accessibility.

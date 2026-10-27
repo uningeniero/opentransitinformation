@@ -1,0 +1,18 @@
+{
+  "package": "opentransitinformation@0.4.0",
+  "network": "oti-teaching-gtfs",
+  "stops": 4,
+  "routes": 2,
+  "paths": 2,
+  "renderedStops": 4,
+  "renderedLabels": 4,
+  "qaPassed": true,
+  "issueCodes": [],
+  "generatedAt": "2026-10-27T00:00:00Z",
+  "svgSha256": "a38c23f7b92c92e8a72aadabc3836e37f9911e152fc32473701e81cdb3da947c",
+  "serviceDate": "20261027",
+  "tripsInFixture": 2,
+  "stopTimesInFixture": 6,
+  "shapePointsInFixture": 6,
+  "zipSha256": "a21ba8ba778d43de04d290fe490d3054c04e9b4cba29aedd670f225209cf26e2"
+}

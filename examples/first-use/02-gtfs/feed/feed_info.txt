@@ -1,0 +1,2 @@
+feed_publisher_name,feed_publisher_url,feed_lang,feed_start_date,feed_end_date,feed_version
+Open Transit Information,https://opentransitinformation.org,en,20261027,20261027,teaching-2026-10-27

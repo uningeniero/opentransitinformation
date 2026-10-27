@@ -1,0 +1,3 @@
+route_id,agency_id,route_short_name,route_long_name,route_type,route_color,route_text_color
+TA,OTI_TEACHING,T1,Depot to Market,3,005B96,FFFFFF
+TB,OTI_TEACHING,T2,Garden to Market,3,111820,FFFFFF

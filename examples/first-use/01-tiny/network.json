@@ -1,0 +1,20 @@
+{
+  "$comment": "SPDX-License-Identifier: CC-BY-4.0",
+  "id": "oti-teaching-tiny",
+  "name": "Teaching network - three stops",
+  "coordinateSystem": "planar",
+  "metadata": {
+    "source": "Synthetic teaching data - Open Transit Information",
+    "license": "CC-BY-4.0",
+    "validFrom": "2026-10-27",
+    "validUntil": "2026-10-27"
+  },
+  "stops": [
+    { "id": "depot", "name": "Depot", "position": [0, 0] },
+    { "id": "library", "name": "Library", "position": [200, 0] },
+    { "id": "market", "name": "Market", "position": [400, 0] }
+  ],
+  "routes": [
+    { "id": "teaching", "shortName": "T", "name": "Teaching route", "color": "#005B96", "paths": [{ "stopIds": ["depot", "library", "market"] }] }
+  ]
+}

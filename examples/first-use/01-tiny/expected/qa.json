@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "issues": [],
+  "statistics": {
+    "contextLabels": 0,
+    "cornerRadius": 26,
+    "crossings": 0,
+    "labelLeaders": 0,
+    "labels": 3,
+    "matchedCorridorSamples": 0,
+    "maxCorridorDisplacement": 0,
+    "maxLaneOffset": 0,
+    "maximumCorridorLanes": 1,
+    "paths": 1,
+    "routes": 1,
+    "sharedEdges": 0,
+    "stops": 3
+  },
+  "checks": {
+    "stopCoverage": true,
+    "labelCoverage": true,
+    "textContrast": 15.532427981194447,
+    "minimumTextContrast": 4.5,
+    "minimumGraphicContrast": 7.150552815984954,
+    "routeCodes": true
+  },
+  "scope": "Automated checks only"
+}

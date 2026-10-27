@@ -7,6 +7,8 @@ Rust/WebAssembly geometry with JavaScript adapters for transit diagrams, geograp
 
 [npm](https://www.npmjs.com/package/opentransitinformation) - [Source](https://github.com/uningeniero/opentransitinformation) - [Releases](https://github.com/uningeniero/opentransitinformation/releases) - [Project](https://opentransitinformation.org)
 
+Start with the [first-use guide](docs/getting-started.md): a three-stop map, a synthetic GTFS feed and a plain browser integration using the published `0.4.0` package, with expected outputs and troubleshooting.
+
 ```sh
 npm install opentransitinformation
 ```

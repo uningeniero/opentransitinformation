@@ -1,0 +1,5 @@
+stop_id,stop_name,stop_lat,stop_lon,location_type,wheelchair_boarding
+A,Depot,51.500,-0.105,0,0
+B,Library,51.500,-0.100,0,0
+C,Market,51.500,-0.095,0,0
+D,Garden,51.505,-0.100,0,0

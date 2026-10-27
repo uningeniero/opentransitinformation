@@ -1,0 +1,3 @@
+route_id,service_id,trip_id,trip_headsign,direction_id,shape_id
+TA,ONE_DAY,TRIP_A,Market,0,SHAPE_A
+TB,ONE_DAY,TRIP_B,Market,0,SHAPE_B

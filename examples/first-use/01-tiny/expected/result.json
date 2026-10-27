@@ -1,0 +1,13 @@
+{
+  "package": "opentransitinformation@0.4.0",
+  "network": "oti-teaching-tiny",
+  "stops": 3,
+  "routes": 1,
+  "paths": 1,
+  "renderedStops": 3,
+  "renderedLabels": 3,
+  "qaPassed": true,
+  "issueCodes": [],
+  "generatedAt": "2026-10-27T00:00:00Z",
+  "svgSha256": "52c85be65c03f19833e9cabad1eda3b43aef4b484baf41bc9279718ad74c172e"
+}

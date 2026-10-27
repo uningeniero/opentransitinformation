@@ -1,0 +1,30 @@
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>A transit map in a web page - Open Transit Information</title>
+  <link rel="stylesheet" href="./page.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <main>
+    <h1>A transit map in a web page</h1>
+    <p>This three-stop teaching network uses opentransitinformation 0.4.0. It does not describe an operating service.</p>
+    <p id="status" role="status">Static map and route list are available.</p>
+    <div id="interactive-map"></div>
+    <section id="static-map" aria-labelledby="static-heading">
+      <h2 id="static-heading">Static map</h2>
+      <img src="./map.svg" alt="Teaching route T connects Depot, Library and Market in that order.">
+    </section>
+    <section aria-labelledby="routes-heading">
+      <h2 id="routes-heading">Routes</h2>
+      <!-- ROUTE_LIST -->
+    </section>
+    <p><a href="./map.svg">Open the SVG</a> - <a href="./network.json">Read the input data</a></p>
+    <footer><p>Project credit: Álvaro Marín Abril and Open Transit Information contributors. <a href="https://opentransitinformation.org">opentransitinformation.org</a>. Code: Apache-2.0. Teaching data and guide: CC-BY-4.0. Font and dependency notices are in <a href="./vendor/THIRD_PARTY_LICENSES.txt">THIRD_PARTY_LICENSES.txt</a> and <a href="./vendor/OFL.txt">OFL.txt</a>.</p></footer>
+  </main>
+</body>
+</html>

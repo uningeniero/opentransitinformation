@@ -1,0 +1,10 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+:root { color-scheme: light; font: 1rem/1.6 system-ui, sans-serif; color: #162536; background: #f4f6f7; }
+body { margin: 0; }
+main { max-width: 75rem; margin: auto; padding: 1.25rem; }
+h1 { line-height: 1.2; }
+a { color: #005b96; overflow-wrap: anywhere; }
+a:focus-visible { outline: 3px solid #005b96; outline-offset: 3px; }
+img { display: block; max-width: 100%; height: auto; }
+footer { border-top: 1px solid #c7d1d8; margin-top: 2rem; padding-top: 1rem; }
+[hidden] { display: none !important; }
